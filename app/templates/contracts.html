@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contratos ativos - {{ app_name }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo principal</a>
+    <div class="utility-bar" role="navigation" aria-label="Atalhos institucionais">
+      <div class="container utility-inner">
+        <a href="#conteudo">Ir para o conteúdo</a>
+        <a href="#menu-principal">Ir para o menu</a>
+        <span>Alto contraste</span>
+        <span>Acessibilidade</span>
+      </div>
+    </div>
+
+    <header class="site-header" role="banner">
+      <div class="container brand-row">
+        <div class="brand-mark" aria-hidden="true">SWP</div>
+        <div class="brand-copy">
+          <span>Tribunal de Justiça do Estado de Minas Gerais</span>
+          <strong>{{ app_name }}</strong>
+        </div>
+      </div>
+      <nav id="menu-principal" class="main-nav" aria-label="Navegação principal">
+        <div class="container nav-inner">
+          <a href="/">Página inicial</a>
+          <a href="/contratos" aria-current="page">Contratos ativos</a>
+          <a href="/docs">API</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="conteudo" class="page-shell" tabindex="-1">
+      <nav class="breadcrumb" aria-label="Você está em">
+        <span>Você está em:</span>
+        <a href="/">Página Inicial</a>
+        <strong>Contratos ativos</strong>
+      </nav>
+
+      <section class="page-title" aria-labelledby="contratos-page-title">
+        <p class="eyebrow">Gestão de contratos ativos</p>
+        <h1 id="contratos-page-title">Contratos ativos</h1>
+        <p>
+          Cadastre e monitore software, licenças ou setores atendidos, empresa, contrato,
+          ciclo, valor, datas, fiscal COATEC e utilização.
+        </p>
+      </section>
+
+      <section class="summary-strip" aria-label="Resumo dos contratos">
+        <div>
+          <strong>{{ active_count }}</strong>
+          <span>contratos ativos</span>
+        </div>
+        <div>
+          <strong>{{ contracts | length }}</strong>
+          <span>contratos monitorados</span>
+        </div>
+        <div>
+          <strong>R$ {{ "%.2f"|format(total_value) }}</strong>
+          <span>valor ativo total</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="novo-contrato-title">
+        <h2 id="novo-contrato-title">Novo contrato</h2>
+        <form class="contract-form" method="post" action="/contratos">
+          <label>
+            Software
+            <input name="software_name" type="text" required minlength="2" />
+          </label>
+          <label>
+            Licenças/setores
+            <input name="license_quantity_sectors" type="text" required />
+          </label>
+          <label>
+            Empresa
+            <input name="company_name" type="text" required />
+          </label>
+          <label>
+            Contrato
+            <input name="contract_number" type="text" required />
+          </label>
+          <label>
+            Ciclo
+            <input name="contracting_cycle" type="text" required placeholder="2026.1" />
+          </label>
+          <label>
+            Valor total
+            <input name="total_value" type="number" min="0" step="0.01" required />
+          </label>
+          <label>
+            Data do contrato
+            <input name="contract_date" type="date" required />
+          </label>
+          <label>
+            Vigência das licenças
+            <input name="license_validity_date" type="date" required />
+          </label>
+          <label>
+            Limite para renovação
+            <input name="renewal_limit_date" type="date" />
+          </label>
+          <label>
+            Status
+            <select name="status">
+              {% for status in contract_statuses %}
+                <option value="{{ status.value }}">{{ status_labels[status] }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            Fiscal COATEC
+            <input name="fiscal_coatec" type="text" required />
+          </label>
+          <label class="span-2">
+            Descrição e utilização
+            <textarea name="description_usage" rows="4" required></textarea>
+          </label>
+          <div class="form-actions span-2">
+            <button type="submit">Salvar contrato</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="lista-contratos-title">
+        <div class="section-heading">
+          <h2 id="lista-contratos-title">Contratos monitorados</h2>
+          <span>{{ contracts | length }} registros</span>
+        </div>
+        {% if contracts %}
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Software</th>
+                  <th>Licenças/setores</th>
+                  <th>Empresa</th>
+                  <th>Contrato</th>
+                  <th>Ciclo</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                  <th>Vigência</th>
+                  <th>Fiscal COATEC</th>
+                  <th>Utilização</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for contract in contracts %}
+                  <tr>
+                    <td>{{ contract.software_name }}</td>
+                    <td>{{ contract.license_quantity_sectors }}</td>
+                    <td>{{ contract.company_name }}</td>
+                    <td>{{ contract.contract_number }}</td>
+                    <td>{{ contract.contracting_cycle }}</td>
+                    <td>R$ {{ "%.2f"|format(contract.total_value) }}</td>
+                    <td>{{ contract.contract_date.strftime("%d/%m/%Y") }}</td>
+                    <td>{{ contract.license_validity_date.strftime("%d/%m/%Y") }}</td>
+                    <td>{{ contract.fiscal_coatec }}</td>
+                    <td>{{ contract.description_usage }}</td>
+                    <td><span class="status-pill">{{ status_labels[contract.status] }}</span></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="empty-state">Nenhum contrato cadastrado ainda.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

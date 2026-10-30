@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo principal</a>
+    <div class="utility-bar" role="navigation" aria-label="Atalhos institucionais">
+      <div class="container utility-inner">
+        <a href="#conteudo">Ir para o conteúdo</a>
+        <a href="#menu-principal">Ir para o menu</a>
+        <span>Alto contraste</span>
+        <span>Acessibilidade</span>
+      </div>
+    </div>
+
+    <header class="site-header" role="banner">
+      <div class="container brand-row">
+        <div class="brand-mark" aria-hidden="true">SWP</div>
+        <div class="brand-copy">
+          <span>Tribunal de Justiça do Estado de Minas Gerais</span>
+          <strong>{{ app_name }}</strong>
+        </div>
+      </div>
+      <nav id="menu-principal" class="main-nav" aria-label="Navegação principal">
+        <div class="container nav-inner">
+          <a href="/" aria-current="page">Página inicial</a>
+          <a href="/contratos">Contratos ativos</a>
+          <a href="/docs">API</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="conteudo" class="page-shell" tabindex="-1">
+      <nav class="breadcrumb" aria-label="Você está em">
+        <span>Você está em:</span>
+        <strong>Página Inicial</strong>
+      </nav>
+
+      <section class="page-title" aria-labelledby="home-title">
+        <p class="eyebrow">Gestão de softwares de prateleira</p>
+        <h1 id="home-title">{{ app_name }}</h1>
+        <p>
+          Controle contratos ativos, ciclos semestrais de aquisição, janelas de solicitação,
+          licitações, renovações, aditivos e fornecedores em uma base auditável.
+        </p>
+      </section>
+
+      <section class="module-grid" aria-label="Módulos do sistema">
+        <a class="module-card module-link" href="/contratos" aria-labelledby="contratos-title">
+          <h2 id="contratos-title">Contratos ativos</h2>
+          <p>
+            Monitore software, licenças/setores, empresa, contrato, ciclo, valor, datas,
+            fiscal COATEC e utilização.
+          </p>
+          <span>Gerenciar contratos</span>
+        </a>
+        <section class="module-card" aria-labelledby="ciclos-title">
+          <h2 id="ciclos-title">Ciclos semestrais</h2>
+          <p>Cadastre o primeiro e segundo ciclos anuais com janelas de solicitação para o ciclo seguinte.</p>
+        </section>
+        <section class="module-card" aria-labelledby="licitacoes-title">
+          <h2 id="licitacoes-title">Licitações</h2>
+          <p>Acompanhe processos com novas aquisições, renovações e aditivos vinculados aos ciclos.</p>
+        </section>
+        <section class="module-card" aria-labelledby="fornecedores-title">
+          <h2 id="fornecedores-title">Fornecedores</h2>
+          <p>Importe planilhas de contatos para comunicação rápida com fornecedores homologados.</p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

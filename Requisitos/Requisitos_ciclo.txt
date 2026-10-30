@@ -1,0 +1,6 @@
+Preciso que implemente a gestão de ciclos semestrais: 
+- São dois ciclos por ano;
+- Cada ciclo tem uma janela de solicitação de aquisições com data de inicio e fim da janela; 
+- Todas as solicitações de aquisições realizadas em uma janela serão adquiridas no ciclos
+- Uma solicitação de aquisição pode virar uma renovação 
+Cadastre o primeiro e segundo ciclos anuais com janelas de solicitação para o ciclo seguinte.
